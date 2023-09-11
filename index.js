@@ -12,13 +12,17 @@ app.use(cookieParser());
 
 //database connection
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  db.DATABASE,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  function (err) {
-    if (err) console.log(err);
-  }
-);
+mongoose
+  .connect(db.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
 
 app.get("/", function (req, res) {
   res.status(200).send("Welcome to login, sign up api");
